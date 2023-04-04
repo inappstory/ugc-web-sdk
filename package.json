@@ -1,0 +1,14 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "packages/@inappstory/*"
+  ],
+  "devDependencies": {
+    "lerna": "^6.5.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@types/react": "^18.0.31"
+  }
+}
