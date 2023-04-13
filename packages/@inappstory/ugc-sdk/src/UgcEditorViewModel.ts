@@ -73,9 +73,7 @@ export class UgcEditorViewModel extends EventEmitter {
     }
 
     get editorFile(): Option<string> {
-        // const editorFile = this.ugcEditorConfig.editor.url;
-        // console.log({editorFile})
-        const editorFile = "https://editorlite.test.inappstory.ru/v0.0.7/build/story-editor_v0.0.7.zip";
+        const editorFile = this.ugcEditorConfig.editor.url;
 
         if (editorFile) {
             return editorFile.replace(/(build\/).+\.zip$/, "build/index.html");
