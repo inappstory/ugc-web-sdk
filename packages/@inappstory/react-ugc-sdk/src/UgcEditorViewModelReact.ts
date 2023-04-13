@@ -117,7 +117,13 @@ export class UgcEditorViewModelReact extends UgcEditorViewModel {
 
     // MARK: Intent(s)
     closeUgcEditor() {
-        this.sendCommandToEditorApi("close");
+        if (this.$showUgcEditorLoaderView.getState() === true) {
+            // loader screen
+            this.showUgcEditorView = false;
+        } else {
+            // editor loaded
+            this.sendCommandToEditorApi("close");
+        }
     }
 
 }

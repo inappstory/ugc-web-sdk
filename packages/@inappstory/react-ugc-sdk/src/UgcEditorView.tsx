@@ -164,7 +164,7 @@ const UgcEditorViewLoader = ({ viewOptions, viewModel }: { viewOptions: UgcEdito
         alignItems: "center",
     };
 
-    const closeButtonHandler = () => viewModel.showUgcEditorView = false;
+    const closeButtonHandler = () => viewModel.closeUgcEditor();
 
     return (
         <div style={loaderStyle}>
