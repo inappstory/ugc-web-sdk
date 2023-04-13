@@ -202,6 +202,4 @@ function App() {
     );
 }
 
-window.UgcSdk = UgcSdk;
-
 export default App;

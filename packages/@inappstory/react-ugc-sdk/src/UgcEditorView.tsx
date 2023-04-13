@@ -1,7 +1,9 @@
-import React, {CSSProperties, useEffect, useRef} from "react";
+import React, {CSSProperties, PropsWithChildren, useEffect, useRef} from "react";
 import type { UgcEditorViewProps } from "./UgcEditorView.h";
 import { useStore } from "effector-react";
 import {UgcEditorViewModelReact} from "~/UgcEditorViewModelReact";
+import {UgcEditorViewContainerProps} from "./UgcEditorView.h";
+import {keyCodes} from "~/helpers/keyCodes";
 
 declare global {
     interface Navigator {
@@ -44,17 +46,17 @@ const UgcEditorView: React.FC<UgcEditorViewProps> = ({ viewModel }) => {
         if (showUgcEditorLoaderView) {
 
             return (
-                <div {...viewModel.containerOptions}>
-                    <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel}/>
+                <UgcEditorViewContainer viewModel={viewModel} key="UgcEditorViewContainer">
+                    <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel} key="UgcEditorViewIFrame"/>
                     <UgcEditorViewLoader viewOptions={viewOptions} viewModel={viewModel}/>
-                </div>
+                </UgcEditorViewContainer>
             );
         }
 
         return (
-            <div {...viewModel.containerOptions}>
-            <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel}/>
-            </div>
+            <UgcEditorViewContainer viewModel={viewModel} key="UgcEditorViewContainer">
+                <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel} key="UgcEditorViewIFrame"/>
+            </UgcEditorViewContainer>
         );
 
 
@@ -63,6 +65,28 @@ const UgcEditorView: React.FC<UgcEditorViewProps> = ({ viewModel }) => {
     return <></>;
 };
 
+const UgcEditorViewContainer: React.FC<PropsWithChildren<UgcEditorViewContainerProps>> = ({ viewModel, children }) => {
+    useEffect(() => {
+        const onKeydown = (e) => {
+            if (e.keyCode === keyCodes.esc) {
+                viewModel.closeUgcEditor();
+            }
+        }
+
+        window.addEventListener('keydown', onKeydown);
+        window.focus(); // for keydown handler
+
+        return () => {
+            window.removeEventListener('keydown', onKeydown)
+        };
+    }, []);
+
+    return (
+        <div {...viewModel.containerOptions} onClick={() => viewModel.closeUgcEditor()}>
+            {children}
+        </div>
+    );
+}
 
 const UgcEditorViewIFrame = ({ viewOptions, viewModel }: { viewOptions: UgcEditorViewModelReact["viewOptions"], viewModel: UgcEditorViewModelReact}) => {
     const viewRef = useRef<HTMLIFrameElement>(null);

@@ -8,7 +8,7 @@ export class UgcEditorViewModelReact extends UgcEditorViewModel {
     public get containerOptions() {
         // let base = super.containerOptions;
 
-        const containerOptions: Record<string, any> = {
+        const containerOptions: {style: CSSProperties} = {
             style: {
                 backgroundColor: "rgba(0, 0, 0, .7)",
                 position: "fixed",
@@ -16,7 +16,7 @@ export class UgcEditorViewModelReact extends UgcEditorViewModel {
                 top: "0px",
                 padding: "0px",
                 border: "0px",
-                zIndex: 2147483645,
+                zIndex: 2147483643,
                 width: "100%",
                 height: "100%",
                 overflow: "hidden",
@@ -113,6 +113,11 @@ export class UgcEditorViewModelReact extends UgcEditorViewModel {
 
     initUgcEditor() {
         this.sendCommandToEditorApi("init", JSON.stringify(this.ugcEditorInitConfig));
+    }
+
+    // MARK: Intent(s)
+    closeUgcEditor() {
+        this.sendCommandToEditorApi("close");
     }
 
 }
