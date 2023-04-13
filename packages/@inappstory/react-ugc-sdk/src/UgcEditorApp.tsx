@@ -2,7 +2,7 @@ import React, {useLayoutEffect, useReducer, useRef} from "react";
 import {UgcEditorViewModelReact} from "./UgcEditorViewModelReact";
 import {UgcEditorView} from "./UgcEditorView";
 
-const UgcEditor: React.FC = ({ safeAreaInsets }: { safeAreaInsets?: { top: number, bottom: number} }) => {
+const UgcEditor: React.FC<{ safeAreaInsets?: { top: number, bottom: number} }> = ({ safeAreaInsets }) => {
     const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     const viewModel = useRef<UgcEditorViewModelReact>();
