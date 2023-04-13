@@ -34,7 +34,7 @@ const UgcEditorView: React.FC<UgcEditorViewProps> = ({ viewModel }) => {
                 top: "30px",
                 bottom: "30px",
                 height: "calc(100vh - (30px * 2))",
-                width: "calc((100vh - (50px * 2)) * 9 / 16)", // aspect ratio 16:9
+                width: "calc((100vh - (30px * 2)) * 9 / 16)", // aspect ratio 16:9
                 left: "50%",
                 transform: "translateX(-50%)",
             };
