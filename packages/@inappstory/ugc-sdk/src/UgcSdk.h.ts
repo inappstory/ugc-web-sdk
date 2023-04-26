@@ -1,6 +1,10 @@
 
 type UgcEditorRemoteConfig = {
     url: string, // editor zip archive - /v0.0.6/build/story-editor_v0.0.6.zip
+
+    urlTemplate: string,
+    versionTemplate: string,
+    versionsMap: Array<{minBuild: number, editor: string}>,
     config: Record<string, any>,
     messages: {
         "dialog_button_not_now": string,
@@ -25,23 +29,21 @@ type UgcEditorRemoteConfig = {
 
 
 export type UgcSdkConfig = {
-    userSessionId: string,
-    ugcEditorRemoteConfig: UgcEditorRemoteConfig
+    sessionId: string,
+    apiKey: string,
+    editor: UgcEditorRemoteConfig,
+    sdkVersion: string,
+    storyId: null,
+    title: null,
+    // base64 encoded image (user avatar)
+    cover: null,
+    // @ts-ignore
+    appPackageId: string,
+    deviceId: string,
+    userId: null | string,
+    lang: string,
+    storyPayload: null,
 };
-
-// рендерим view с loader и крестиком
-// их можно кастомизировать по шаблону RenderProps
-
-// iframe
-// выстроить систему связи
-// должна быть часть внутри iframe - которая дергает api редактора
-
-
-// App создает вьюшку
-
-
-// вставляем компонент при интеграции, у вьюмодели флаг - что рендерим (ничего, редактор), флаг - рендерим ли лоадер
-
 
 
 export type EditorApiFns = {

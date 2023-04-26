@@ -2,6 +2,7 @@ import {EventEmitter} from "events";
 import {createEvent, createStore} from "effector";
 import {UgcSdk} from "~/UgcSdk";
 import {Option} from "./commonTypes";
+import {UgcSdkConfig} from "~/UgcSdk.h";
 
 export class UgcEditorViewModel extends EventEmitter {
 
@@ -28,11 +29,12 @@ export class UgcEditorViewModel extends EventEmitter {
     private _eventShowUgcEditorLoaderView = createEvent<boolean>();
     public $showUgcEditorLoaderView = createStore(false).on(this._eventShowUgcEditorLoaderView, (_, show) => show);
 
-    public ugcEditorConfig: Record<any, any> = {};
+    public ugcEditorConfig: UgcSdkConfig = null!;
 
     public _safeAreaInsets: {top: number, bottom: number} = {top: 0, bottom: 0};
 
-    public get ugcEditorInitConfig(): Record<any, any> {
+
+    public get ugcEditorInitConfig() {
 
         const sdkVersion = process.env.SDK_VERSION;
 
@@ -73,7 +75,38 @@ export class UgcEditorViewModel extends EventEmitter {
     }
 
     get editorFile(): Option<string> {
-        const editorFile = this.ugcEditorConfig.editor.url;
+        const editorDefaultFile = this.ugcEditorConfig.editor.url;
+        let editorFile = editorDefaultFile;
+
+        const urlTemplate = this.ugcEditorConfig.editor.urlTemplate;
+        const versionTemplate = this.ugcEditorConfig.editor.versionTemplate;
+        const versionsMap = this.ugcEditorConfig.editor.versionsMap;
+
+        if (Array.isArray(versionsMap) && typeof versionTemplate === "string" && typeof urlTemplate === "string") {
+
+            // max buildVersion - at first array position
+            versionsMap.sort((a, b) => b.minBuild - a.minBuild);
+
+            const ugcSdkBuild: number = parseInt(String(process.env.SDK_VERSION_CODE));
+
+            let version: string|null = null;
+            for (const item of versionsMap) {
+                if (ugcSdkBuild >= item.minBuild) {
+                    version = item.editor;
+                    break;
+                }
+            }
+
+            if (version != null) {
+                editorFile = urlTemplate.replace(new RegExp(versionTemplate, 'g'), version);
+            }
+
+        }
+
+
+
+
+
 
         if (editorFile) {
             return editorFile.replace(/(build\/).+\.zip$/, "build/index.html");
