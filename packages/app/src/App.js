@@ -113,7 +113,8 @@ const StoriesFeed = () => {
 
             // mount and start StoriesList widget
             // #stories_widget - html element selectors
-            const storiesList = new storyManager.StoriesList("#stories_widget", appearanceManager, {feed: "default", useUgcCard: true});
+            // const storiesList = new storyManager.StoriesList("#stories_widget", appearanceManager, {feed: "default", useUgcCard: true});
+            const storiesList = new storyManager.UGCStoriesList("#stories_widget", appearanceManager, {feed: "default", useUgcCard: true});
 
             // 4. Override default loading animation
             storiesList.on('startLoad', loaderContainer => loaderContainer.style.background = 'url("https://inappstory.com/stories/loader.gif") center / 45px auto no-repeat transparent');
@@ -145,7 +146,7 @@ const StoriesFeed = () => {
                 if (d.getElementById(id)) return st;
                 js = d.createElement(s);
                 js.id = id;
-                js.src = "https://sdk.test.inappstory.com/v2.6.0/dist/js/IAS.js";
+                js.src = "https://sdk.test.inappstory.com/v2.6.4/dist/js/IAS.js";
                 js.async = true;
                 //js.charset = "UTF-8";
                 fjs.parentNode.insertBefore(js, fjs);
