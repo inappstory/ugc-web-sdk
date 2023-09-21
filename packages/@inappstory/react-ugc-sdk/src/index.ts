@@ -1,4 +1,4 @@
-export { UgcEditor } from "~/UgcEditorApp";
+export { UgcEditor } from "./UgcEditorApp";
 
 export { UgcSdk } from "@inappstory/ugc-sdk";
 

@@ -1,9 +1,9 @@
 import React, {CSSProperties, PropsWithChildren, useEffect, useRef} from "react";
 import type { UgcEditorViewProps } from "./UgcEditorView.h";
 import { useStore } from "effector-react";
-import {UgcEditorViewModelReact} from "~/UgcEditorViewModelReact";
+import {UgcEditorViewModelReact} from "./UgcEditorViewModelReact";
 import {UgcEditorViewContainerProps} from "./UgcEditorView.h";
-import {keyCodes} from "~/helpers/keyCodes";
+import {keyCodes} from "./helpers/keyCodes";
 
 declare global {
     interface Navigator {
