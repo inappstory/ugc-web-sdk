@@ -1,8 +1,8 @@
 import {EventEmitter} from "events";
 import {createEvent, createStore} from "effector";
-import {UgcSdk} from "~/UgcSdk";
+import {UgcSdk} from "./UgcSdk";
 import {Option} from "./commonTypes";
-import {UgcSdkConfig} from "~/UgcSdk.h";
+import {UgcSdkConfig} from "./UgcSdk.h";
 
 export class UgcEditorViewModel extends EventEmitter {
 

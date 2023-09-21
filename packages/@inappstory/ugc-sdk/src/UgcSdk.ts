@@ -1,5 +1,5 @@
 import type {UgcSdkConfig} from "./UgcSdk.h";
-import {UgcEditorViewModel} from "~/UgcEditorViewModel";
+import {UgcEditorViewModel} from "./UgcEditorViewModel";
 
 export class UgcSdk {
 
