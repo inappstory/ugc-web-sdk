@@ -2,7 +2,7 @@ import React, {useLayoutEffect} from "react";
 import logo from './logo.svg';
 import './App.css';
 
-import { UgcEditor, UgcSdk} from "@inappstory/react-ugc-sdk";
+import { UgcEditor, UgcSdk, ReactUgcSdk } from "@inappstory/react-ugc-sdk";
 
 const StoriesFeed = () => {
     useLayoutEffect(() => {
@@ -164,14 +164,17 @@ const StoriesFeed = () => {
             openFeed();
         }
 
+        console.log({
+            ReactUgcSdkName: ReactUgcSdk.sdkVersionName,
+            ReactUgcSdkCode: ReactUgcSdk.sdkVersionCode,
+        });
+
+        console.log({
+            UgcSdkName: UgcSdk.sdkVersionName,
+            UgcSdkCode: UgcSdk.sdkVersionCode,
+        });
 
 
-
-
-        const popup = document.querySelector(".vkuiPopoutRoot--absolute");
-        if (popup) {
-            popup.parentElement.removeChild(popup);
-        }
 
     }, []);
 
