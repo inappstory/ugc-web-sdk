@@ -25,6 +25,8 @@ const UgcEditorView: React.FC<UgcEditorViewProps> = ({ viewModel }) => {
 
     const showUgcEditorView = useStore(viewModel.$showUgcEditorView);
     const showUgcEditorLoaderView = useStore(viewModel.$showUgcEditorLoaderView);
+    const ugcEditorConfigIsReady = useStore(viewModel.$ugcEditorConfigIsReady);
+
 
     if (showUgcEditorView) {
 
@@ -43,11 +45,16 @@ const UgcEditorView: React.FC<UgcEditorViewProps> = ({ viewModel }) => {
         const viewOptions = viewModel.viewOptions;
         viewOptions.style = {...viewOptions.style, ...positionOptions};
 
+        let IframeView = <></>;
+        if (ugcEditorConfigIsReady) {
+            IframeView = <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel} key="UgcEditorViewIFrame"/>;
+        }
+
         if (showUgcEditorLoaderView) {
 
             return (
                 <UgcEditorViewContainer viewModel={viewModel} key="UgcEditorViewContainer">
-                    <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel} key="UgcEditorViewIFrame"/>
+                    {IframeView}
                     <UgcEditorViewLoader viewOptions={viewOptions} viewModel={viewModel}/>
                 </UgcEditorViewContainer>
             );
@@ -55,7 +62,7 @@ const UgcEditorView: React.FC<UgcEditorViewProps> = ({ viewModel }) => {
 
         return (
             <UgcEditorViewContainer viewModel={viewModel} key="UgcEditorViewContainer">
-                <UgcEditorViewIFrame viewOptions={viewOptions} viewModel={viewModel} key="UgcEditorViewIFrame"/>
+                {IframeView}
             </UgcEditorViewContainer>
         );
 
