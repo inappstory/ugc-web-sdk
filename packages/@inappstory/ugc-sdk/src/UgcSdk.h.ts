@@ -1,3 +1,6 @@
+export interface UgcEditorConfigurable {
+    getUgcEditorConfig(): Promise<UgcSdkConfig>;
+}
 
 type UgcEditorRemoteConfig = {
     url: string, // editor zip archive - /v0.0.6/build/story-editor_v0.0.6.zip
@@ -33,16 +36,11 @@ export type UgcSdkConfig = {
     apiKey: string,
     editor: UgcEditorRemoteConfig,
     sdkVersion: string,
-    storyId: null,
-    title: null,
-    // base64 encoded image (user avatar)
-    cover: null,
-    // @ts-ignore
     appPackageId: string,
     deviceId: string,
-    userId: null | string,
+    userId?: string,
     lang: string,
-    storyPayload: null,
+    storyPayload?: Record<string, unknown>,
 };
 
 

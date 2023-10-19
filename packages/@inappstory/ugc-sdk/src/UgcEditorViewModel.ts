@@ -1,7 +1,6 @@
 import {EventEmitter} from "events";
 import {createEvent, createStore} from "effector";
 import {UgcSdk} from "./UgcSdk";
-import {Option} from "./commonTypes";
 import {UgcSdkConfig} from "./UgcSdk.h";
 
 export class UgcEditorViewModel extends EventEmitter {
@@ -29,29 +28,39 @@ export class UgcEditorViewModel extends EventEmitter {
     private _eventShowUgcEditorLoaderView = createEvent<boolean>();
     public $showUgcEditorLoaderView = createStore(false).on(this._eventShowUgcEditorLoaderView, (_, show) => show);
 
-    public ugcEditorConfig: UgcSdkConfig = null!;
-
     public _safeAreaInsets: {top: number, bottom: number} = {top: 0, bottom: 0};
+
+    public set ugcEditorConfig(value: UgcSdkConfig) {
+        this._eventSetUgcEditorConfig(value);
+    }
+
+    private _eventSetUgcEditorConfig = createEvent<UgcSdkConfig>();
+    public $ugcEditorConfig = createStore<UgcSdkConfig>(null!).on(this._eventSetUgcEditorConfig, (_, config) => config);
+    public $ugcEditorConfigIsReady = this.$ugcEditorConfig.map(config => config != null);
 
 
     public get ugcEditorInitConfig() {
+        const config = this.$ugcEditorConfig.getState();
+        if (config == null) {
+            return null!;
+        }
 
         const sdkVersion = process.env.SDK_VERSION;
 
         return {
-            sessionId: this.ugcEditorConfig.sessionId,
-            apiKey: this.ugcEditorConfig.apiKey,
-            config: this.ugcEditorConfig.editor.config,
-            sdkVersion: this.ugcEditorConfig.sdkVersion,
+            sessionId: config.sessionId,
+            apiKey: config.apiKey,
+            config: config.editor.config,
+            sdkVersion: config.sdkVersion,
             ugcSdkVersion: sdkVersion,
-            storyId: this.ugcEditorConfig.storyId,
-            title: this.ugcEditorConfig.title,
-            cover: this.ugcEditorConfig.cover,
-            appPackageId: this.ugcEditorConfig.appPackageId,
-            deviceId: this.ugcEditorConfig.deviceId,
-            userId: this.ugcEditorConfig.userId,
-            lang: this.ugcEditorConfig.lang,
-            storyPayload: this.ugcEditorConfig.storyPayload,
+            storyId: undefined,
+            title: undefined,
+            cover: undefined,
+            appPackageId: config.appPackageId,
+            deviceId: config.deviceId,
+            userId: config.userId,
+            lang: config.lang,
+            storyPayload: config.storyPayload,
 
             safeAreaInsets: this.safeAreaInsets,
         };
@@ -63,7 +72,7 @@ export class UgcEditorViewModel extends EventEmitter {
             top: 0,
             bottom: 0,
         };
-        if (this.ugcEditorConfig && this._safeAreaInsets) {
+        if (this._safeAreaInsets) {
             if (typeof this._safeAreaInsets.top === "number") {
                 safeAreaInsets.top = this._safeAreaInsets.top;
             }
@@ -74,13 +83,17 @@ export class UgcEditorViewModel extends EventEmitter {
         return safeAreaInsets;
     }
 
-    get editorFile(): Option<string> {
-        const editorDefaultFile = this.ugcEditorConfig.editor.url;
-        let editorFile = editorDefaultFile;
+    get editorFile(): string | undefined {
+        const config = this.$ugcEditorConfig.getState();
+        if (config == null) {
+            return undefined;
+        }
 
-        const urlTemplate = this.ugcEditorConfig.editor.urlTemplate;
-        const versionTemplate = this.ugcEditorConfig.editor.versionTemplate;
-        const versionsMap = this.ugcEditorConfig.editor.versionsMap;
+        let editorFile = config.editor.url;
+
+        const urlTemplate = config.editor.urlTemplate;
+        const versionTemplate = config.editor.versionTemplate;
+        const versionsMap = config.editor.versionsMap;
 
         if (Array.isArray(versionsMap) && typeof versionTemplate === "string" && typeof urlTemplate === "string") {
 
@@ -103,15 +116,10 @@ export class UgcEditorViewModel extends EventEmitter {
 
         }
 
-
-
-
-
-
         if (editorFile) {
             return editorFile.replace(/(build\/).+\.zip$/, "build/index.html");
         }
-        return null;
+        return undefined;
     }
 
 

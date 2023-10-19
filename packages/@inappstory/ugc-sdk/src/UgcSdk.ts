@@ -1,18 +1,18 @@
-import type {UgcSdkConfig} from "./UgcSdk.h";
-import {UgcEditorViewModel} from "./UgcEditorViewModel";
+import { UgcEditorViewModel } from "./UgcEditorViewModel";
+import {UgcEditorConfigurable} from "./UgcSdk.h";
 
 export class UgcSdk {
 
-    constructor(private ugcEditorConfig: UgcSdkConfig) {}
-
-    public openUgcCardClickHandler() {
-
+    public static showEditor(ugcEditorConfigurable: UgcEditorConfigurable, payload?: Record<string, unknown>): void {
         if (UgcSdk._viewModel) {
-
-            UgcSdk._viewModel.ugcEditorConfig = this.ugcEditorConfig;
-
             UgcSdk._viewModel.showUgcEditorView = true;
             UgcSdk._viewModel.showUgcEditorLoaderView = true;
+            ugcEditorConfigurable.getUgcEditorConfig().then(config => {
+                if (UgcSdk._viewModel) {
+                    config.storyPayload = payload;
+                    UgcSdk._viewModel.ugcEditorConfig = config;
+                }
+            });
         } else {
             throw new Error("UgcEditor component does not connected to App");
         }
