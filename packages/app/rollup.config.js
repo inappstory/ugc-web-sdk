@@ -7,16 +7,26 @@ import replace from '@rollup/plugin-replace';
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss'
 import typescript from "rollup-plugin-typescript2";
-import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import css from "rollup-plugin-import-css";
 
 export default {
-    input: "src/index.js",
+    input: "src/index.tsx",
     output: {
         file: "dist/bundle.js",
         format: "iife",
         sourcemap: true,
     },
     plugins: [
+        // resolve(),
+        commonjs(),
+        css(),
+        typescript({
+            tsconfig: './tsconfig.json',
+            declaration: true,
+            declarationDir: './types',
+            jsx:
+                process.env.NODE_ENV === 'development' ? 'react-jsxdev' : 'react-jsx',
+        }),
         image(),
         postcss({
             extensions: [".css"],
@@ -30,9 +40,6 @@ export default {
         babel({
             presets: ["@babel/preset-react"/*, '@babel/preset-env', '@babel/preset-typescript'*/],
         }),
-        // typescript(),
-        commonjs(),
-        // importMetaAssets(),
         serve({
             open: false,
             verbose: true,

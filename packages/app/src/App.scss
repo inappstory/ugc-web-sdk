@@ -24,8 +24,15 @@
     color: white;
 }
 
+.App-delimiter {
+    min-height: 20px;
+    width: 100%;
+    height: 100%;
+}
+
 .App-link {
     color: #61dafb;
+    cursor: pointer;
 }
 
 @keyframes App-logo-spin {
