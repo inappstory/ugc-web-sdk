@@ -1,9 +1,7 @@
 
 const storyManagerConfig = {
-    // apiKey: 'BSEBAAAAAAAAAAAAABYaIThgDx0GIhFYKhdBRhlHFCMoYAkNPDauAaJvpKu-CuqyqA3nU8OGJheFtlMBWIcbmRLHRX0',
-    apiKey: 'BSoAAAAAAAAAAAAAABYaIThgDx0GIhFYKhdBRhlHFCMoYAkNcQqZR7Czlob66R4MWU_OqlT3NT2JCAWHG8wJwRp68B8',
+    apiKey: "{project-integration-key}",
     userId: null,
-    appPackageId: "com.inappstory.webpreview",
     tags: [],
     placeholders: {},
     lang: 'en',
