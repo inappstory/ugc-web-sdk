@@ -125,7 +125,10 @@ const UgcEditorViewLoader = ({ viewOptions, viewModel }: { viewOptions: UgcEdito
             }        
         `;
 
-        const styleElement = document.createElement('style');
+        const styleElement = document.createElement("style");
+        if (viewModel.nonce) {
+            styleElement.setAttribute("nonce", viewModel.nonce);
+        }
         document.head.appendChild(styleElement);
         const styleSheet = styleElement.sheet;
         styleSheet.insertRule(keyframes, 0);

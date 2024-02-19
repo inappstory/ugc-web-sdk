@@ -51,7 +51,7 @@ export class UgcEditorViewModelReact extends UgcEditorViewModel {
     }
 
     get editorFileOrigin(): Option<string> {
-        if (this.editorFile !== null) {
+        if (this.editorFile != null) {
             return new URL(this.editorFile).origin;
         }
         return null;
