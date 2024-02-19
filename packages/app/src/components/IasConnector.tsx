@@ -18,7 +18,7 @@ export const IasConnector = ({ children }: PropsWithChildren) => {
             if (d.getElementById(id)) return st;
             const js = d.createElement(s) as HTMLScriptElement;
             js.id = id;
-            js.src = 'https://sdk.test.inappstory.com/v2.9.0/dist/js/IAS.js';
+            js.src = 'https://sdk.test.inappstory.com/v2.10.5/dist/js/IAS.js';
             js.async = true;
             js.charset = 'UTF-8';
             fjs?.parentNode?.insertBefore(js, fjs);
