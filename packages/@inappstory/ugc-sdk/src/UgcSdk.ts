@@ -5,6 +5,9 @@ export class UgcSdk {
 
     public static showEditor(ugcEditorConfigurable: UgcEditorConfigurable, payload?: Record<string, unknown>): void {
         if (UgcSdk._viewModel) {
+            if (ugcEditorConfigurable.getNonce) {
+                UgcSdk._viewModel.nonce = ugcEditorConfigurable.getNonce();
+            }
             UgcSdk._viewModel.showUgcEditorView = true;
             UgcSdk._viewModel.showUgcEditorLoaderView = true;
             ugcEditorConfigurable.getUgcEditorConfig().then(config => {

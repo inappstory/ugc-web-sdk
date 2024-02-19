@@ -1,5 +1,6 @@
 export interface UgcEditorConfigurable {
     getUgcEditorConfig(): Promise<UgcSdkConfig>;
+    getNonce?: () => string | undefined;
 }
 
 type UgcEditorRemoteConfig = {

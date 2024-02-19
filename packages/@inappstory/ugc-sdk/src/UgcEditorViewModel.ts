@@ -131,5 +131,13 @@ export class UgcEditorViewModel extends EventEmitter {
         return {};
     }
 
+    private _nonce: string | undefined;
+    public set nonce(value: string | undefined) {
+        this._nonce = value;
+    }
+
+    public get nonce(): string | undefined {
+        return this._nonce;
+    }
 
 }
